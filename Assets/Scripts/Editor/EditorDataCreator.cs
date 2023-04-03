@@ -31,6 +31,18 @@ public class EditorDataCreator : MonoBehaviour
         AssetDatabase.CreateAsset(newData, path);
     }
 
+    [MenuItem("Window/3D Meteo/Data Creator/Create Network Settings Data")]
+    public static void CreateNetworkSettingsData()
+    {
+        NetworkSettingsData newData = ScriptableObject.CreateInstance("NetworkSettingsData") as NetworkSettingsData;
+        newData.name = "(rename me) New NetworkSettings Data";
+
+        Selection.activeObject = newData;
+
+        string path = "Assets/Content/Datas/Settings/" + newData.name + ".asset";
+        AssetDatabase.CreateAsset(newData, path);
+    }
+
     [MenuItem("Window/3D Meteo/Data Creator/Create Location Data")]
     public static void CreateLocationData()
     {

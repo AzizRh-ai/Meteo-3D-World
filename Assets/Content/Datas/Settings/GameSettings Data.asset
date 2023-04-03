@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89a193eec5dafb44ae298bc7d7aa084, type: 3}
   m_Name: GameSettings Data
   m_EditorClassIdentifier: 
+  NetworkSettings: {fileID: 11400000, guid: 62a9eed941b8f914aa627444fd8594db, type: 2}
+  UISettings: {fileID: 11400000, guid: 5ac9d7990ed5a554b888e2a41e62fa4a, type: 2}
