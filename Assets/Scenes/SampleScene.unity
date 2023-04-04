@@ -565,12 +565,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32372b0af62ddb48a872e18af31eb92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zoomSpeed: 10
-  _rotationSpeed: 50
+  _zoomSpeed: 1000
+  _rotationSpeed: 500
   _earthLayer:
     serializedVersion: 2
     m_Bits: 8
   _weatherInfoText: {fileID: 927482465}
+  worldCoordonatesManager: {fileID: 0}
 --- !u!1 &693655006
 GameObject:
   m_ObjectHideFlags: 0

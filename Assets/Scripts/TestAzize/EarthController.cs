@@ -4,8 +4,6 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Rendering.DebugUI;
 
 public class EarthController : MonoBehaviour
 {
@@ -67,11 +65,11 @@ public class EarthController : MonoBehaviour
 
             return new Vector2(latitude, longitude);
         }
-        return Vector2.zero;        
+        return Vector2.zero;
     }
 
     void MoveDisplayPointObjectToSelectedCoordonates(Vector3 pos)
-    {       
+    {
         worldCoordonatesManager.displayedPointObject.transform.position = pos;
 
     }
@@ -84,6 +82,29 @@ public class EarthController : MonoBehaviour
         Debug.Log(requestUrl);
 
         StartCoroutine(FetchWeatherData(requestUrl));
+        StartCoroutine(FetchCityName(latString, lonString));
+    }
+
+    IEnumerator FetchCityName(string latString, string lonString)
+    {
+        string urlOSM = $"https://nominatim.openstreetmap.org/reverse/reverse?lat={latString}&lon={lonString}&format=json";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(urlOSM))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log("Weather data: " + webRequest.downloadHandler.text);
+                string cityData = webRequest.downloadHandler.text;
+                OpenStreetData parsedData = JsonUtility.FromJson<OpenStreetData>(cityData);
+                _weatherInfoText.text = "City: " + parsedData.address.city + ", Country: " + parsedData.address.country + " County: " + parsedData.address.county;
+            }
+        }
     }
 
     private IEnumerator FetchWeatherData(string url)
@@ -98,6 +119,7 @@ public class EarthController : MonoBehaviour
             }
             else
             {
+
                 Debug.Log("Weather data: " + webRequest.downloadHandler.text);
                 string weatherData = webRequest.downloadHandler.text;
                 WeatherData parsedData = JsonUtility.FromJson<WeatherData>(weatherData);
@@ -105,10 +127,25 @@ public class EarthController : MonoBehaviour
             }
         }
     }
+
     [Serializable]
     public class WeatherData
     {
         public float latitude;
         public float longitude;
+    }
+
+    [Serializable]
+    public class OpenStreetData
+    {
+        public Address address;
+    }
+
+    [Serializable]
+    public class Address
+    {
+        public string city;
+        public string county;
+        public string country;
     }
 }
