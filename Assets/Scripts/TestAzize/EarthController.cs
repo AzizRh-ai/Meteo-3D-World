@@ -4,6 +4,8 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EarthController : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class EarthController : MonoBehaviour
     private float _rotationSpeed = 50f;
     [SerializeField] private LayerMask _earthLayer;
     [SerializeField] private TextMeshProUGUI _weatherInfoText;
-
+    [SerializeField] private WorldCoordonatesManager worldCoordonatesManager;
 
     public static string baseUrl = "https://api.open-meteo.com/v1/forecast";
 
@@ -58,11 +60,21 @@ public class EarthController : MonoBehaviour
             float latitude = Mathf.Asin(normalizedHitPoint.y) * Mathf.Rad2Deg;
             float longitude = Mathf.Atan2(normalizedHitPoint.z, normalizedHitPoint.x) * Mathf.Rad2Deg;
 
+            MoveDisplayPointObjectToSelectedCoordonates(hit.point);
+
+            worldCoordonatesManager.LongitudeLookAt(longitude);
+            worldCoordonatesManager.LatitudeLookAt(latitude);
+
             return new Vector2(latitude, longitude);
         }
-        return Vector2.zero;
+        return Vector2.zero;        
     }
 
+    void MoveDisplayPointObjectToSelectedCoordonates(Vector3 pos)
+    {       
+        worldCoordonatesManager.displayedPointObject.transform.position = pos;
+
+    }
 
     public void GetWeatherData(float latitude, float longitude)
     {

@@ -565,12 +565,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32372b0af62ddb48a872e18af31eb92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 10
-  rotationSpeed: 50
-  earthLayer:
+  _zoomSpeed: 10
+  _rotationSpeed: 50
+  _earthLayer:
     serializedVersion: 2
     m_Bits: 8
-  weatherInfoText: {fileID: 927482465}
+  _weatherInfoText: {fileID: 927482465}
 --- !u!1 &693655006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,8 +1158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137413be8824f49499cad1b0489f570f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earthController: {fileID: 626470713}
-  inputField: {fileID: 1128149067}
+  _earth: {fileID: 626470713}
+  _latLongText: {fileID: 1128149067}
 --- !u!1 &1332112149
 GameObject:
   m_ObjectHideFlags: 0
