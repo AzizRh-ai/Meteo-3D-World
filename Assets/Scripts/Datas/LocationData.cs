@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LocationData : ScriptableObject
@@ -15,7 +13,7 @@ public class LocationData : ScriptableObject
         public float radius = 0f;
 
     }
-    public CoordonatesData coordonates  = new CoordonatesData();
+    public CoordonatesData coordonates = new CoordonatesData();
 
     [Serializable]
     public class SiteData
@@ -31,7 +29,6 @@ public class LocationData : ScriptableObject
         public string temperature = "";
         // TO COMPLETE
     }
-    public MeteoData meteo = new MeteoData();
     #endregion Variables
 
 
