@@ -52,6 +52,14 @@ public class EarthController : MonoBehaviour
         {
             Vector3 hitPoint = hit.point;
             Vector3 localHitPoint = transform.InverseTransformPoint(hitPoint);
+            
+            Vector3 test = hitPoint - transform.position;
+            test = test.normalized;
+
+            Vector3 camDirection = Camera.main.transform.position - transform.position;
+            camDirection = camDirection.normalized;
+
+            Quaternion deltaRot = Quaternion.FromToRotation(camDirection, test);
 
             Vector3 normalizedHitPoint = localHitPoint.normalized;
 
@@ -60,8 +68,11 @@ public class EarthController : MonoBehaviour
 
             MoveDisplayPointObjectToSelectedCoordonates(hit.point);
 
-            worldCoordonatesManager.LongitudeLookAt(longitude);
-            worldCoordonatesManager.LatitudeLookAt(latitude);
+            //   worldCoordonatesManager.LongitudeLookAt(longitude);
+            //   worldCoordonatesManager.LatitudeLookAt(latitude);
+
+            // soustrait deltRot (rotation de distance entre la cam et hitpoint)
+            transform.rotation = Quaternion.Inverse(deltaRot) * transform.rotation;
 
             return new Vector2(latitude, longitude);
         }
