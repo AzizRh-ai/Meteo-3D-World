@@ -14,7 +14,6 @@ public class EarthController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _weatherInfoText;
     [SerializeField] private WorldCoordonatesManager worldCoordonatesManager;
 
-    public static string baseUrl = "https://api.open-meteo.com/v1/forecast";
 
     void Update()
     {
@@ -78,16 +77,17 @@ public class EarthController : MonoBehaviour
     {
         string latString = latitude.ToString(CultureInfo.InvariantCulture);
         string lonString = longitude.ToString(CultureInfo.InvariantCulture);
-        string requestUrl = $"{baseUrl}?latitude={latString}&longitude={lonString}&hourly=temperature_2m,weathercode&current_weather=true";
+        string requestUrl = $"{NetworkSettingsData.API_OM_URL}/forecast?latitude={latString}&longitude={lonString}&hourly=temperature_2m,weathercode&current_weather=true";
         Debug.Log(requestUrl);
 
         StartCoroutine(FetchWeatherData(requestUrl));
         StartCoroutine(FetchCityName(latString, lonString));
     }
 
+    // TODO: Refactor Request
     IEnumerator FetchCityName(string latString, string lonString)
     {
-        string urlOSM = $"https://nominatim.openstreetmap.org/reverse/reverse?lat={latString}&lon={lonString}&format=json";
+        string urlOSM = $"{NetworkSettingsData.API_OSM_URL}/reverse?lat={latString}&lon={lonString}&format=json";
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(urlOSM))
         {
